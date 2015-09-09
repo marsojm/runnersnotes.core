@@ -30,11 +30,7 @@ public class NotesInteractor implements NoteBoundary {
         int id = 0;
         if (errors.isEmpty()) {
             try {
-                id = gateway.listNotes()
-                        .stream()
-                        .map(n -> n.getId())
-                        .reduce(1, (a, b) -> {if (a < b) return b; else return a; } ) + 1;
-
+                id = getNextId();
                 gateway.createNote(id, new NoteData(id, note.getCreated(), note.getDistance(), note.getDuration(), note.getComments()));
             } catch (InvalidIdException e) {
                 e.printStackTrace();
@@ -46,5 +42,12 @@ public class NotesInteractor implements NoteBoundary {
     @Override
     public List<NoteData> getNoteList(GetNoteListRequest request) {
         return gateway.listNotes();
+    }
+
+    private int getNextId() {
+        return gateway.listNotes()
+                .stream()
+                .map(n -> n.getId())
+                .reduce(0, (a, b) -> { if (a < b) return b; else return a; } ) + 1;
     }
 }
