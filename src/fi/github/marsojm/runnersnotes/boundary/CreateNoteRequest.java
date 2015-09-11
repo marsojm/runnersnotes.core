@@ -11,6 +11,10 @@ public class CreateNoteRequest {
     private int duration;
     private String comments;
 
+    public CreateNoteRequest() {
+
+    }
+
     public CreateNoteRequest(Date created, float distance, int duration, String comments) {
 
         this.created = created;
@@ -33,5 +37,21 @@ public class CreateNoteRequest {
 
     public String getComments() {
         return comments;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
