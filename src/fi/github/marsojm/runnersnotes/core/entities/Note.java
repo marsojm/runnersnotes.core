@@ -24,7 +24,7 @@ public class Note {
         List<String> errors = new ArrayList<String>();
         if (this.distance < 0) errors.add("Distance must be greater than zero!");
         if (this.duration < 0) errors.add("Duration must be greater than zero!");
-        if (this.created == null) errors.add("'Created' field is mandatory!");
+        if (this.created == null) errors.add("Invalid date!");
 
         return errors;
     }
