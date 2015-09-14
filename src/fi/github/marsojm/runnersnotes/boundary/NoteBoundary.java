@@ -1,5 +1,7 @@
 package fi.github.marsojm.runnersnotes.boundary;
 
+import fi.github.marsojm.runnersnotes.core.interactors.EntityValidationException;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,6 @@ import java.util.List;
  */
 public interface NoteBoundary {
     NoteData getNote(GetNoteRequest request);
-    int createNote(CreateNoteRequest request);
+    int createNote(CreateNoteRequest request) throws EntityValidationException;
     List<NoteData> getNoteList(GetNoteListRequest request);
 }

@@ -24,7 +24,7 @@ public class NotesInteractor implements NoteBoundary {
     }
 
     @Override
-    public int createNote(CreateNoteRequest request) {
+    public int createNote(CreateNoteRequest request) throws EntityValidationException {
         Note note = new Note(request.getCreated(), request.getDistance(), request.getDuration(), request.getComments());
         List<String> errors = note.validate();
         int id = 0;
@@ -35,7 +35,10 @@ public class NotesInteractor implements NoteBoundary {
             } catch (InvalidIdException e) {
                 e.printStackTrace();
             }
+        } else {
+            throw new EntityValidationException(errors = errors);
         }
+
         return id;
     }
 

@@ -26,7 +26,7 @@ public class NotesInteractorTest {
     }
 
     @Test
-    public void testGetNote() throws Exception {
+    public void testGetNote() throws Exception, EntityValidationException {
         int id = interactor.createNote(new CreateNoteRequest(new Date(), 10, 20, "no comments"));
         NoteData response = interactor.getNote(new GetNoteRequest(id));
         assertNotNull(response);
@@ -39,7 +39,7 @@ public class NotesInteractorTest {
     }
 
     @Test
-    public void testGetListOfNotes() throws Exception {
+    public void testGetListOfNotes() throws Exception, EntityValidationException {
         interactor.createNote(new CreateNoteRequest(new Date(), 10, 20, "no comments"));
         interactor.createNote(new CreateNoteRequest(new Date(), 10, 20, "no comments"));
         interactor.createNote(new CreateNoteRequest(new Date(), 10, 20, "no comments"));
@@ -49,7 +49,7 @@ public class NotesInteractorTest {
     }
 
     @Test
-    public void testGetNoteWhenMultipleNotesExists() throws Exception {
+    public void testGetNoteWhenMultipleNotesExists() throws Exception, EntityValidationException {
         interactor.createNote(new CreateNoteRequest(new Date(), 10, 20, "no comments"));
         int id = interactor.createNote(new CreateNoteRequest(new Date(), 15, 30, "many comments"));
         NoteData response = interactor.getNote(new GetNoteRequest(id));
