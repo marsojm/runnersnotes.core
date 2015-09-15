@@ -55,4 +55,13 @@ public class NotesInteractorTest {
         NoteData response = interactor.getNote(new GetNoteRequest(id));
         assertNotNull(response);
     }
+
+    @Test
+    public void testValidationErrors() {
+        try {
+            interactor.createNote(new CreateNoteRequest(null, -10, -20, "no comments"));
+        } catch (EntityValidationException e) {
+            assertEquals(3, e.getErrors().size());
+        }
+    }
 }
