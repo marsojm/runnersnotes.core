@@ -49,4 +49,12 @@ public class NoteTest {
         assertEquals("Duration must be greater than zero!", errors.get(0));
     }
 
+    @Test
+    public void testValidateWithNullDate() throws Exception {
+        Note n = new Note(null, 1, 1, "");
+        List<String> errors = n.validate();
+        assertEquals(1, errors.size());
+        assertEquals("Invalid date!", errors.get(0));
+    }
+    
 }
