@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<UserData> {
 
     private static HashMap<Integer, NoteData> noteTable;
+    private static HashMap<Integer, UserData> userTable;
 
     public InMemoryDb() {
         this.noteTable = new HashMap<>();
+        this.userTable = new HashMap<>();
     }
 
     @Override
@@ -43,16 +45,20 @@ public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<User
 
     @Override
     public UserData getUser(int userId) {
-        return null;
+        return userTable.getOrDefault(userId, null);
     }
 
     @Override
     public List<UserData> listUsers() {
-        return null;
+        return userTable.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void createUser(int userId, UserData user) throws InvalidIdException {
-
+        if (userTable.containsKey(userId)) throw new InvalidIdException();
+        userTable.put(userId, user);
     }
 }
