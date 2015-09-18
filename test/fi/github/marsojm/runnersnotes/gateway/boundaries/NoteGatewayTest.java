@@ -47,4 +47,5 @@ public class NoteGatewayTest {
         NoteData duplicate = TestDataGenerator.GenerateNoteData(id);
         gateway.createNote(0, id, duplicate);
     }
+
 }
