@@ -21,12 +21,12 @@ public final class InMemoryDb implements NoteGateway<NoteData> {
     }
 
     @Override
-    public NoteData getNote(int id) {
+    public NoteData getNote(int userId, int id) {
         return noteTable.getOrDefault(id, null);
     }
 
     @Override
-    public List<NoteData> listNotes() {
+    public List<NoteData> listNotes(int userId) {
         return noteTable.entrySet()
                 .stream()
                 .map(Map.Entry::getValue)
@@ -34,7 +34,7 @@ public final class InMemoryDb implements NoteGateway<NoteData> {
     }
 
     @Override
-    public void createNote(int id, NoteData note) throws InvalidIdException {
+    public void createNote(int userId, int id, NoteData note) throws InvalidIdException {
         if (noteTable.containsKey(id)) throw new InvalidIdException();
         noteTable.put(id, note);
     }

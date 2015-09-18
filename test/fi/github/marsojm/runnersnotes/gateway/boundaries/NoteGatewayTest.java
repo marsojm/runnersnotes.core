@@ -25,9 +25,9 @@ public class NoteGatewayTest {
     public void testGetNote() throws Exception {
         int id = new Random().nextInt();
         NoteData data = TestDataGenerator.GenerateNoteData(id);
-        gateway.createNote(id, data);
+        gateway.createNote(0, id, data);
 
-        NoteData actual = gateway.getNote(id);
+        NoteData actual = gateway.getNote(0, id);
         assertEquals(data, actual);
     }
 
@@ -35,16 +35,16 @@ public class NoteGatewayTest {
     public void testCreateNote() throws Exception {
         int id = new Random().nextInt();
         NoteData data = TestDataGenerator.GenerateNoteData(id);
-        gateway.createNote(id, data);
+        gateway.createNote(0, id, data);
     }
 
     @Test(expected = InvalidIdException.class)
     public void testCreateNoteWithDuplicateId() throws Exception {
         int id = new Random().nextInt();
         NoteData data = TestDataGenerator.GenerateNoteData(id);
-        gateway.createNote(id, data);
+        gateway.createNote(0, id, data);
 
         NoteData duplicate = TestDataGenerator.GenerateNoteData(id);
-        gateway.createNote(id, duplicate);
+        gateway.createNote(0, id, duplicate);
     }
 }
