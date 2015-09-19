@@ -50,4 +50,14 @@ public class UserGatewayTest {
         UserData data = TestDataGenerator.GenerateUserData(id);
         gateway.createUser(id, data);
     }
+
+    @Test(expected = InvalidIdException.class)
+    public void testCreateNoteWithDuplicateId() throws Exception {
+        int id = rnd.nextInt();
+        UserData data = TestDataGenerator.GenerateUserData(id);
+        gateway.createUser(id, data);
+
+        UserData duplicate = TestDataGenerator.GenerateUserData(id);
+        gateway.createUser(id, duplicate);
+    }
 }
