@@ -3,6 +3,7 @@ package fi.github.marsojm.runnersnotes.gateway.implementations;
 import fi.github.marsojm.runnersnotes.boundary.NoteData;
 import fi.github.marsojm.runnersnotes.boundary.UserData;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.InvalidIdException;
+import fi.github.marsojm.runnersnotes.gateway.boundaries.InvalidParentIdException;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.NoteGateway;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.UserGateway;
 
@@ -16,7 +17,38 @@ import java.util.stream.Collectors;
  */
 public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<UserData> {
 
-    private static HashMap<Integer, NoteData> noteTable;
+    class KeyPair {
+        private final int key1;
+        private final int key2;
+        public KeyPair(int key1, int key2) {
+            this.key1 = key1;
+            this.key2 = key2;
+        }
+
+        public int getKey1() {
+            return key1;
+        }
+
+        public int getKey2() {
+            return key2;
+        }
+
+        @Override
+        public int hashCode() {
+            return this.key1 * 10000 + this.key2 * 100;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof KeyPair) {
+                KeyPair o = (KeyPair)other;
+                return  o.getKey1() == this.key1 && o.getKey2() == this.key2;
+            }
+            return false;
+        }
+    }
+
+    private static HashMap<KeyPair, NoteData> noteTable;
     private static HashMap<Integer, UserData> userTable;
 
     public InMemoryDb() {
@@ -26,7 +58,7 @@ public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<User
 
     @Override
     public NoteData getNote(int userId, int id) {
-        return noteTable.getOrDefault(id, null);
+        return noteTable.getOrDefault(new KeyPair(userId,id), null);
     }
 
     @Override
@@ -38,9 +70,10 @@ public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<User
     }
 
     @Override
-    public void createNote(int userId, int id, NoteData note) throws InvalidIdException {
-        if (noteTable.containsKey(id)) throw new InvalidIdException();
-        noteTable.put(id, note);
+    public void createNote(int userId, int id, NoteData note) throws InvalidIdException, InvalidParentIdException {
+        if (!userTable.containsKey(userId)) throw new InvalidParentIdException();
+        if (noteTable.containsKey(new KeyPair(userId,id))) throw new InvalidIdException();
+        noteTable.put(new KeyPair(userId,id), note);
     }
 
     @Override

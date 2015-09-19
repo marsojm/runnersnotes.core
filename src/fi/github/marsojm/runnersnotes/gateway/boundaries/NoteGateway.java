@@ -8,5 +8,5 @@ import java.util.List;
 public interface NoteGateway<T> {
     T getNote(int userId, int id);
     List<T> listNotes(int userId);
-    void createNote(int userId, int id, T note) throws InvalidIdException;
+    void createNote(int userId, int id, T note) throws InvalidIdException, InvalidParentIdException;
 }

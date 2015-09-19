@@ -3,6 +3,7 @@ package fi.github.marsojm.runnersnotes.core.interactors;
 import fi.github.marsojm.runnersnotes.boundary.*;
 import fi.github.marsojm.runnersnotes.core.entities.Note;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.InvalidIdException;
+import fi.github.marsojm.runnersnotes.gateway.boundaries.InvalidParentIdException;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.NoteGateway;
 
 import java.util.List;
@@ -33,6 +34,8 @@ public class NotesInteractor implements NoteBoundary {
                 id = getNextId();
                 gateway.createNote(0, id, new NoteData(id, note.getCreated(), note.getDistance(), note.getDuration(), note.getComments()));
             } catch (InvalidIdException e) {
+                e.printStackTrace();
+            } catch (InvalidParentIdException e) {
                 e.printStackTrace();
             }
         } else {
