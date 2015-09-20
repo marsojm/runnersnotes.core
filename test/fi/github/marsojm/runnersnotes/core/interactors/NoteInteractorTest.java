@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class NoteInteractorTest {
 
-    private NoteInteractor interactor;
+    private NoteBoundary interactor;
     private int userId = 1;
 
     @Before
