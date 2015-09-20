@@ -1,6 +1,7 @@
 package fi.github.marsojm.runnersnotes.core.interactors;
 
 import fi.github.marsojm.runnersnotes.boundary.CreateUserRequest;
+import fi.github.marsojm.runnersnotes.boundary.GetUserRequest;
 import fi.github.marsojm.runnersnotes.boundary.UserBoundary;
 import fi.github.marsojm.runnersnotes.boundary.UserData;
 import fi.github.marsojm.runnersnotes.core.entities.User;
@@ -23,6 +24,11 @@ public class UserInteractor implements UserBoundary {
     public List<UserData> getUserList() {
         List<UserData> users = new ArrayList<>();
         return users;
+    }
+
+    @Override
+    public UserData getUser(GetUserRequest request) {
+        return gateway.getUser(request.getUserId());
     }
 
     public int createUser(CreateUserRequest request) {
