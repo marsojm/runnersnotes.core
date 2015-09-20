@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by Marko on 7.9.2015.
  */
 public class CreateNoteRequest {
+    private int userId;
     private Date created;
     private float distance;
     private int duration;
@@ -15,8 +16,8 @@ public class CreateNoteRequest {
 
     }
 
-    public CreateNoteRequest(Date created, float distance, int duration, String comments) {
-
+    public CreateNoteRequest(int userId, Date created, float distance, int duration, String comments) {
+        this.userId = userId;
         this.created = created;
         this.distance = distance;
         this.duration = duration;
@@ -53,5 +54,9 @@ public class CreateNoteRequest {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

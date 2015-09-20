@@ -11,17 +11,17 @@ import java.util.List;
 /**
  * Created by Marko on 7.9.2015.
  */
-public class NotesInteractor implements NoteBoundary {
+public class NoteInteractor implements NoteBoundary {
 
     private NoteGateway<NoteData> gateway;
 
-    public NotesInteractor(NoteGateway<NoteData> gateway) {
+    public NoteInteractor(NoteGateway<NoteData> gateway) {
         this.gateway = gateway;
     }
 
     @Override
     public NoteData getNote(GetNoteRequest request) {
-        return gateway.getNote(0, request.getId());
+        return gateway.getNote(request.getUserId(), request.getId());
     }
 
     @Override
@@ -31,8 +31,8 @@ public class NotesInteractor implements NoteBoundary {
         int id = 0;
         if (errors.isEmpty()) {
             try {
-                id = getNextId();
-                gateway.createNote(0, id, new NoteData(id, note.getCreated(), note.getDistance(), note.getDuration(), note.getComments()));
+                id = getNextId(request.getUserId());
+                gateway.createNote(request.getUserId(), id, new NoteData(id, note.getCreated(), note.getDistance(), note.getDuration(), note.getComments()));
             } catch (InvalidIdException e) {
                 e.printStackTrace();
             } catch (InvalidParentIdException e) {
@@ -47,11 +47,11 @@ public class NotesInteractor implements NoteBoundary {
 
     @Override
     public List<NoteData> getNoteList(GetNoteListRequest request) {
-        return gateway.listNotes(0);
+        return gateway.listNotes(request.getUserId());
     }
 
-    private int getNextId() {
-        return gateway.listNotes(0)
+    private int getNextId(int userId) {
+        return gateway.listNotes(userId)
                 .stream()
                 .map(n -> n.getId())
                 .reduce(0, (a, b) -> { if (a < b) return b; else return a; } ) + 1;

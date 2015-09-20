@@ -48,12 +48,12 @@ public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<User
         }
     }
 
-    private static HashMap<KeyPair, NoteData> noteTable;
-    private static HashMap<Integer, UserData> userTable;
+    private static HashMap<KeyPair, NoteData> noteTable = new HashMap<>();
+    private static HashMap<Integer, UserData> userTable = new HashMap<>();
 
-    public InMemoryDb() {
-        this.noteTable = new HashMap<>();
-        this.userTable = new HashMap<>();
+    public static void reset() {
+        noteTable.clear();
+        userTable.clear();
     }
 
     @Override
@@ -65,6 +65,7 @@ public final class InMemoryDb implements NoteGateway<NoteData>, UserGateway<User
     public List<NoteData> listNotes(int userId) {
         return noteTable.entrySet()
                 .stream()
+                .filter(p -> p.getKey().getKey1() == userId)
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }

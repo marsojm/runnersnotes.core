@@ -5,12 +5,18 @@ package fi.github.marsojm.runnersnotes.boundary;
  */
 public class GetNoteRequest {
     private int id;
+    private int userId;
 
-    public GetNoteRequest(int id) {
+    public GetNoteRequest(int userId, int id) {
         this.id = id;
+        this.userId = userId;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }
