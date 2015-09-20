@@ -1,5 +1,6 @@
 package fi.github.marsojm.runnersnotes.core.interactors;
 
+import fi.github.marsojm.runnersnotes.boundary.CreateUserRequest;
 import fi.github.marsojm.runnersnotes.boundary.UserData;
 import fi.github.marsojm.runnersnotes.gateway.boundaries.UserGateway;
 import fi.github.marsojm.runnersnotes.gateway.implementations.InMemoryDb;
@@ -26,6 +27,13 @@ public class UserInteractorTest {
     @After
     public void tearDown() throws Exception {
         InMemoryDb.reset();
+    }
+
+    @Test
+    public void testCreateUser() {
+        CreateUserRequest request = new CreateUserRequest("abcd","abcdefgh");
+        int id = interactor.createUser(request);
+        assertEquals(1,id);
     }
 
     @Test
